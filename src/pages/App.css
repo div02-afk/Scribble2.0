@@ -1,0 +1,46 @@
+.container{
+  background-color:rgb(203, 148, 255);
+  display:flex;
+  flex-direction:column;
+  justify-content: left;
+  align-items: center;
+  max-width: 10%;
+  height: 100vh;
+  min-width: 50px;
+  width: max-content;
+  border-right:5px black solid ;
+  margin:0;
+  /* justify-content: space-between; */
+}
+.color,.lineWidth,#clear{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 5%;
+  min-width: 50px;
+  margin-left:1rem;
+  margin-right: 1rem;
+  margin-top:2rem ;
+}
+#stroke,#lineWidth{
+  width: 5rem;
+  min-width: 3rem;
+}
+#canvas{
+  background-color: rgb(255, 255, 255);
+  /* border: 1px solid black; */
+  width: 90%;
+  height: auto;
+  margin: auto auto;
+  display: block;
+}
+.form-control{
+  width: 5rem;
+  min-width: 3rem;
+  border:0;
+}
+.btn,.btn-primary{
+  width: 5rem;
+  /* background-color: */
+}
