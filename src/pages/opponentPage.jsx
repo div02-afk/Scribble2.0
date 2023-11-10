@@ -20,33 +20,10 @@ export default function Opponent() {
     }
   };
 
-  
-  // async function handleRecieve() {
-  //   const response = await fetch("http://localhost:4000/api/res", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     // body: {sample:"sample"},
-  //   });
-  //   const data = await response.json();
-  //   // console.log(data,"recieved");
-  //   setImageData(data.url.url);
-
-  //   // console.log( typeof imageData);
-  // }
-//   setInterval(() => {
-//     handleRecieve();
-//   }, 500);
-  //   handleRecieve();
   useEffect(() => {
     
     console.log("drawing");
     const canvas = document.getElementById("canvas");
-    // ctxRef.current = canvas.getContext("2d");
-
-    
-
     const ctx = canvas.getContext("2d");
     const img = new Image();
 
@@ -55,8 +32,6 @@ export default function Opponent() {
     img.onload = () => {
       ctx.drawImage(img, 0, 0);
     };
-    // handleRecieve();
-    
   }, [imageData]);
   setInterval(() => {
     fetchEvents();

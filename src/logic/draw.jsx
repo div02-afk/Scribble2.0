@@ -5,8 +5,7 @@ import { collection, addDoc } from "firebase/firestore";
 async function saveData(data) {
   try {
     const docRef = await addDoc(collection(db, "currentImage"), keyReducer);
-    // console.log(keyReducer)
-    console.log("Document written with ID: ", docRef.id, keyReducer);
+    console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
   }
@@ -30,30 +29,8 @@ const Draw = ({ store }) => {
         return;
       }
 
-      
-
-      // database.ref("drawing").on("value", (snapshot) => {
-      //   const data = snapshot.val();
-      //   if (data) {
-      //     // Clear the canvas
-      //     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      //     // Redraw the lines
-      //     data.forEach((line) => {
-      //       ctx.beginPath();
-      //       ctx.moveTo(line.startX, line.startY);
-      //       ctx.lineTo(line.endX, line.endY);
-      //       ctx.stroke();
-      //     });
-      //   }
-      // });
-
-      // const change = () => {console.log(store.getState())}
-      // store.subscribe(change)
-
       ctx.lineWidth = lineWidth;
       ctx.lineCap = "round";
-      // console.log(canvasOffsetX, canvasOffsetY);
       ctx.lineTo(
         e.clientX - canvasOffsetX / 2 + 10,
         e.clientY + 10 - canvasOffsetY / 2
@@ -96,8 +73,6 @@ const Draw = ({ store }) => {
     });
     canvas.addEventListener("mousedown", (e) => {
       console.log("mousedown");
-      
-      // interval = setInterval(() => saveDataInterval(keyReducer), 2000);
       isPainting = true;
       startX = e.clientX;
       startY = e.clientY;
@@ -105,7 +80,6 @@ const Draw = ({ store }) => {
 
     canvas.addEventListener("mouseup", (e) => {
       console.log("mouseup");
-      // clearInterval(interval);
       keyReducer = {
         type: "DRAW",
         payload: canvas.toDataURL(),
