@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { db } from "../firebaseConfig";
 import { collection, addDoc, where, doc, updateDoc } from "firebase/firestore";
 import { query, orderBy, limit, getDocs } from "firebase/firestore";
-
 export default function Home() {
   const [name, setName] = useState("");
   const [filled, setFilled] = useState(false);

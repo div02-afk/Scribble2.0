@@ -8,7 +8,8 @@ export default function AppRoutes(){
         <BrowserRouter>
         <Routes>
             <Route path="/opponent" element={<Opponent/>}/>
-            <Route path="/" element={<App/>}/>
+            <Route path="/player" element={<App/>}/>
+            <Route path="/" element={<Home/>}/>
         </Routes>
         </BrowserRouter>
     )
