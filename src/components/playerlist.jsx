@@ -13,7 +13,7 @@ export default function PlayerList({ roomKey }) {
     const intervel = setInterval(() => {
     fetching();}, 1000);
     return () => clearInterval(intervel);
-  }, [roomKey]);
+  });
   return (
     <>
       <div className="w-32 border-2">
