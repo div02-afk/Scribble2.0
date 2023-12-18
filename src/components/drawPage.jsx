@@ -3,9 +3,10 @@ import "./App.css";
 import Draw from "../logic/draw";
 import { app } from "../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
+import { updateChance } from "./fireBasefunc";
 
 function DrawPage() {
-
+  
   return (
     <>
     {/* <div>Hello</div> */}
@@ -38,6 +39,7 @@ function DrawPage() {
         <button id="clear" className="btn btn-primary">
           Clear
         </button>
+        <button onClick = {updateChance} >Next Player</button>
       </div>
       <Draw />
     </> 

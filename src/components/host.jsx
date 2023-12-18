@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { join, createNewRoom,startGame,createCanvas } from "../components/fireBasefunc";
+import { createNewRoom,startGame,createCanvas } from "../components/fireBasefunc";
 import PlayerList from "./playerlist";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

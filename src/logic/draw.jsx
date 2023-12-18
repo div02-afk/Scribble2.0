@@ -10,7 +10,7 @@ async function saveData(data) {
       imageData: data.payload,
       time: data.time,
     });
-    console.log("Document written with ID: ", docRef);
+    // console.log("Document written with ID: ", docRef);
   } catch (e) {
     console.error("Error adding document: ", e);
   }

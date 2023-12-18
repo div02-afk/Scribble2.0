@@ -9,18 +9,6 @@ import {
   } from "firebase/firestore";
   import { db } from "../firebaseConfig";
 
-  async function fetchChance(roomKey) {
-    try {
-      const docRef = collection(db, "room");
-      const q = query(docRef, where("roomKey", "==", roomKey));
-      const querySnapshot = await getDocs(q);
-      let Data = querySnapshot.docs.map((doc) => doc.data());
-      Data = Data[0].chance;
-      return Data;
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  }
   async function join(roomKey, name) {
     if(fetchStarted(roomKey)){
       console.log("game started");
@@ -28,9 +16,9 @@ import {
     }
     console.log("joining room");
     let playerList = [...(await fetchPlayers(roomKey))];
-    console.log("players:", playerList);
+    // console.log("players:", playerList);
     playerList.push(name);
-    console.log("players:", playerList);
+    // console.log("players:", playerList);
     try {
       window.localStorage.setItem("roomKey", roomKey);
       window.localStorage.setItem("name", name);
@@ -49,22 +37,38 @@ import {
   async function fetchPlayers(roomKey) {
     try {
       console.log("fetching players");
-      console.log("roomKey:", roomKey);
+      // console.log("roomKey:", roomKey);
       const docRef = collection(db, "room");
       const q = query(docRef, where("roomKey", "==", roomKey));
       const querySnapshot = await getDocs(q);
       let Data = querySnapshot.docs.map((doc) => doc.data());
-      console.log("Data:",Data);
       Data = Data[0].playerList;
+      console.log("Data:",Data);
+      return Data;
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
+  async function fetchChance(roomKey) {
+    try {
+      const docRef = collection(db, "room");
+      const q = query(docRef, where("roomKey", "==", roomKey));
+      const querySnapshot = await getDocs(q);
+      let Data = querySnapshot.docs.map((doc) => doc.data());
+      Data = Data[0].chance;
+      console.log("chance data: ",Data );
       return Data;
     } catch (e) {
       console.error("Error adding document: ", e);
     }
   }
   
-  async function updateChance(roomKey) {
+  async function updateChance() {
+    const roomKey = window.localStorage.getItem("roomKey");
     const chance =await fetchChance(roomKey)+1;
+    console.log("chance in update:",chance);
     const playerList =await fetchPlayers(roomKey);
+    console.log("playerlist:",playerList);
     const newChance = chance%playerList.length;
     
     try {
