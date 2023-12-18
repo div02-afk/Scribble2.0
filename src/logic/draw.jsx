@@ -92,7 +92,7 @@ export default function Draw(){
     />
   );
 };
-
+export {saveDataInterval};
 // export default DrawableCanvas;
 
 

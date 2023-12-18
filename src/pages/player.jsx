@@ -14,10 +14,10 @@ export default function Player() {
   const [playerList, setPlayerList] = useState([]);
   const [chance, setChance] = useState(0);
   const [myChance, setMyChance] = useState(false);
-  
+
   useEffect(() => {
     console.log("chance:", chance);
-  console.log("roomKey:", roomKey);
+    console.log("roomKey:", roomKey);
     const player = async () => {
       const players = await fetchPlayers(roomKey);
       const chance = await fetchChance(roomKey);
@@ -28,9 +28,22 @@ export default function Player() {
       setPlayerList([...players]);
     };
     player();
-  },[]);
+  }, []);
+
+  const chanceCheck = async () => {
+    const newChance = await fetchChance(roomKey);
+    if (newChance != chance) {
+      window.location.reload();
+    }
+  };
   useEffect(() => {
-    console.log("chance:", chance);
+    
+    const intervalId = setInterval(() => {
+      chanceCheck();
+    }, 3000);
+    return () => {
+      clearInterval(intervalId);
+    };
   });
   return (
     <>
@@ -39,16 +52,15 @@ export default function Player() {
         {!myChance && (
           <>
             <h1>not your chance</h1>
-            <Opponent/>
+            <Opponent />
           </>
         )}
         {myChance && (
           <>
             <h1>your chance</h1>
-            <DrawPage/>
+            <DrawPage />
           </>
         )}
-        
       </div>
     </>
   );

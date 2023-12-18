@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import Draw from "../logic/draw";
+import Draw, { saveDataInterval } from "../logic/draw";
 import { app } from "../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 import { updateChance } from "./fireBasefunc";
@@ -39,7 +39,14 @@ function DrawPage() {
         <button id="clear" className="btn btn-primary">
           Clear
         </button>
-        <button onClick = {updateChance} >Next Player</button>
+        <button onClick = {()=>{
+          const data = {
+            payload: canvas.toDataURL(),
+            time: new Date(),
+          };
+          saveDataInterval(data);
+          updateChance();
+        }} >Next Player</button>
       </div>
       <Draw />
     </> 
