@@ -4,24 +4,12 @@ import Draw from "../logic/draw";
 import { app } from "../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 
-function App() {
-  
-  // const [imageData,set] = store.getState()
-  // async function handleSend(){
-  //   const response = await fetch("http://localhost:4000/api/save", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(store.getState()),
-  //   });
-  //   const data = await response.json();
-  //   console.log(data);
-  // }
+function DrawPage() {
 
   return (
     <>
-      <div className="container" id="toolbar">
+    {/* <div>Hello</div> */}
+      <div className="container h-32 flex flex-row gap-5" id="toolbar">
         <h2 className="text-center">Meh</h2>
         <div className="color">
           <label htmlFor="stroke" className="text-color">
@@ -52,8 +40,8 @@ function App() {
         </button>
       </div>
       <Draw />
-    </>
+    </> 
   );
 }
 
-export default App;
+export default DrawPage;

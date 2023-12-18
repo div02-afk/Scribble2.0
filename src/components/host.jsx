@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { join, createNewRoom } from "../components/fireBasefunc";
+import { join, createNewRoom,startGame,createCanvas } from "../components/fireBasefunc";
 import PlayerList from "./playerlist";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,24 +8,28 @@ export default function Host() {
   const [roomKey, setRoomKey] = useState("");
   const [hostName, setHostName] = useState("");
   const [joined, setJoined] = useState(false);
-  function createRoom() {
+  async function createRoom() {
     console.log("creating room");
     const uniqueID = new Date().getTime().toString();
-
-    setRoomKey(uniqueID);
+    setRoomKey(uniqueID)
+    await createCanvas(uniqueID);
     const data = {
       roomKey: uniqueID,
       hostName: hostName,
       playerList: [hostName],
+      started:false,
+      chance:0
     };
+    window.localStorage.setItem("roomKey", uniqueID);
+    window.localStorage.setItem("name", hostName);
     console.log(data);
-    createNewRoom(data);
+    await createNewRoom(data);
     // join(roomKey, hostName);
     setJoined(true);
-    // setRoomKey()
   }
   const notify = () => {
     console.log("copy notify");
+    console.log("local ",window.localStorage.getItem("roomKey"));
     toast("Copied to Clipboard", {
       position: "top-right",
       autoClose: 1000,
@@ -54,7 +58,7 @@ export default function Host() {
                 console.log("copied");
               }}
             >
-                <ToastContainer/>
+              <ToastContainer />
               {roomKey}
             </div>
           </>
@@ -76,7 +80,12 @@ export default function Host() {
             </button>
           </div>
         )}
-        {joined && <PlayerList roomKey={roomKey} />}
+        {joined && (
+          <>
+            <PlayerList roomKey={roomKey} />
+            <button className="w-32 border-2" onClick={()=>{startGame(roomKey)}} >Start Game</button>
+          </>
+        )}
       </div>
     </>
   );
