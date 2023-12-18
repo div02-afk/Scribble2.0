@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { db } from "../firebaseConfig";
 import PlayerList from "./playerlist";
 import { ToastContainer, toast } from "react-toastify";
@@ -33,6 +33,18 @@ export default function Join() {
       theme: "light",
     });
   };
+  useEffect(() => {
+    const fetching = async () => {
+      if(await fetchStarted(roomKey)){
+        console.log("game started");
+        setStarted(true);
+        window.location.href = "/player";
+      }
+    };
+    const intervel = setInterval(() => {
+    fetching();},2000);
+    return () => clearInterval(intervel);
+  })
   async function join() {
     if(await fetchStarted(roomKey)){
       console.log("game started");
@@ -60,7 +72,7 @@ export default function Join() {
       console.error("Error adding document: ", e);
     }
   }
-  
+
   
   return (
     <>
