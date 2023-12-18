@@ -41,7 +41,7 @@ function DrawPage() {
         </button>
         <button onClick = {()=>{
           const data = {
-            payload: canvas.toDataURL(),
+            payload: "",
             time: new Date(),
           };
           saveDataInterval(data);
