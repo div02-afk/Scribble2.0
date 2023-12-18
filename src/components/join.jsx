@@ -61,6 +61,7 @@ export default function Join() {
     }
   }
   
+  
   return (
     <>
       <div className="w-screen h-screen flex flex-col justify-center items-center text-center">

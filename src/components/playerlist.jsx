@@ -10,7 +10,9 @@ export default function PlayerList({ roomKey }) {
       const players = await fetchPlayers(roomKey);
       setPlayerList(players);
     };
-    fetching();
+    const intervel = setInterval(() => {
+    fetching();}, 1000);
+    return () => clearInterval(intervel);
   }, [roomKey]);
   return (
     <>
