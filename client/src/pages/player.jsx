@@ -51,22 +51,7 @@ export default function Player() {
       setMyChance(false);
     }
   }, [chance]);
-  useEffect(() => {
-    const fetchChance = async () => {
-      const response = await fetch("https://scribble2-0-server.vercel.app/api/chance", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          room: roomKey,
-        }),
-      });
-      const data = await response.json();
-      setChance(data.chance);
-    };
-    fetchChance();
-  }, []);
+  
 
   return (
     <>

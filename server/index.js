@@ -78,11 +78,7 @@ io.on("connection", (socket) => {
   });
 });
 
-app.post("/api/chance", (req, res) => {
-  console.log(req.body);
-  // const {room} = req.body;
-  // res.send({chance: rooms[room].chance});
-});
+
 
 server.listen(3000, () => {
   console.log("listening on port 3000");
