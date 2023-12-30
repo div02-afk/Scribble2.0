@@ -1,4 +1,4 @@
 import io from "socket.io-client";
-const socket = io.connect("https://scribble2-0-server-bf7ri33tt-divyam-s-projects.vercel.app");
+const socket = io.connect("https://scribble-2-0-server.onrender.com");
 console.log("socket", socket.connected);
 export default socket;
