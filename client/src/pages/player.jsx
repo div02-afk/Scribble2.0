@@ -53,7 +53,7 @@ export default function Player() {
   }, [chance]);
   useEffect(() => {
     const fetchChance = async () => {
-      const response = await fetch("http://localhost:3000/api/chance", {
+      const response = await fetch("https://scribble2-0-server.vercel.app/api/chance", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
