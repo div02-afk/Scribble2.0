@@ -7,7 +7,7 @@ app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "scribble2-0-hicmuk9ht-divyam-s-projects.vercel.app",
+    origin: "https://scribble2-0.vercel.app",
     methods: ["GET", "POST"],
   },
 });
