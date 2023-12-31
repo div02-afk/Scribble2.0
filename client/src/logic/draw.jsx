@@ -34,10 +34,12 @@ export default function Draw(){
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
 
+    const strokeColor = document.getElementById('stroke').value;
+    const lineWidth = document.getElementById('lineWidth').value;
     // Set drawing styles
-    context.lineWidth = 5;
+    context.lineWidth = lineWidth;
     context.lineCap = 'round';
-    context.strokeStyle = '#000';
+    context.strokeStyle = strokeColor;
 
     // Draw a line
     context.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
