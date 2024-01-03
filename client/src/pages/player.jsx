@@ -8,27 +8,27 @@ const findIndex = (name, playerList) => {
   for (let i = 0; i < playerList.length; i++) {
     if (playerList[i] === name) {
       return i;
-    }
-    else{
-      console.log("current name: ",playerList[i]);
+    } else {
+      console.log("current name: ", playerList[i]);
     }
   }
 };
 export default function Player() {
-  const [name, setName] = useState(window.localStorage.getItem("name"));
-  const [roomKey, setRoomKey] = useState(
-    window.localStorage.getItem("roomKey")
-  );
-  // const [playerList, setPlayerList] = useState([]);
+  const name = window.localStorage.getItem("name");
+  const roomKey = window.localStorage.getItem("roomKey");
+  let words;
   const [chance, setChance] = useState(0);
   const [myChance, setMyChance] = useState(false);
-
   useEffect(() => {
     socket.on("chance", (data) => {
-      console.log("waiting for chance");
-      console.log("chance:", data);
-      setChance(data);
+      window.localStorage.setItem("words", JSON.stringify(data));
+      setChance(data.chance);
+      window.localStorage.setItem("chance", data.chance);
     });
+  socket.on("selectedWord", (data) => {
+    console.log("selected word:",data)
+    window.localStorage.setItem("selectedWord", data);
+  });
   }, [socket]);
   useEffect(() => {
     socket.emit("joinRoom", {
@@ -38,20 +38,20 @@ export default function Player() {
     });
   }, []);
   useEffect(() => {
-    const playerList =JSON.parse(window.localStorage.getItem("playerList"));
+    setChance(window.localStorage.getItem("chance")||0);
+    const playerList = JSON.parse(window.localStorage.getItem("playerList"));
     console.log("playerList", playerList);
-    console.log("name", name);
+    // console.log("name", name);
     const index = findIndex(name, playerList);
     console.log("current chance", chance);
     console.log("index", index);
     if (chance == index) {
       setMyChance(true);
-      console.log("my chance");
+      // console.log("my chance");
     } else {
       setMyChance(false);
     }
   }, [chance]);
-  
 
   return (
     <>
@@ -67,10 +67,10 @@ export default function Player() {
           <>
             <h1>your chance</h1>
             <DrawPage />
+            <WordChoice />
           </>
         )}
       </div>
-      {/* <WordChoice /> */}
     </>
   );
 }
