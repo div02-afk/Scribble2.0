@@ -40,9 +40,9 @@ export default function Draw(){
     context.lineWidth = lineWidth;
     context.lineCap = 'round';
     context.strokeStyle = strokeColor;
-
+    context.lineTo(e.screenX - canvas.offsetLeft, e.screenY - canvas.offsetTop - 100);  
     // Draw a line
-    context.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+    // context.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
     // const { offsetX, offsetY } = e;
     // context.lineTo(offsetX, offsetY);
     context.stroke();
