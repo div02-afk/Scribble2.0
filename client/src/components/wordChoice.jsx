@@ -6,27 +6,28 @@ export default function WordChoice() {
   const name = window.localStorage.getItem("name");
   console.log("name", name);
   const worde = JSON.parse(window.localStorage.getItem("words")).words;
-//   console.log("words", typeof worde);
+  //   console.log("words", typeof worde);
   let words = ["hello", "i", "am", "here"];
   try {
-    words = [...worde];
+    if (worde) {
+      words = [...worde];
+    }
     // console.log("realWords", words);
   } catch (err) {
     console.log(err);
   }
   const [visible, setVisible] = useState(true);
   useEffect(() => {
-      console.log("selectedBy", window.localStorage.getItem("selectedBy"));
+    console.log("selectedBy", window.localStorage.getItem("selectedBy"));
     if (window.localStorage.getItem("selectedBy") === name) {
       setVisible(false);
     }
-  },);
+  });
   useEffect(() => {
     socket.on("selectedWord", (data) => {
       window.localStorage.setItem("selectedBy", data.selectedBy);
-        console.log("selected word from server",data.selectedBy);
+      console.log("selected word from server", data.selectedBy);
     });
-    
   }, [socket]);
 
   function selectWord(word) {
