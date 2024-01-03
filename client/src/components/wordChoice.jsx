@@ -8,14 +8,10 @@ export default function WordChoice() {
   const worde = JSON.parse(window.localStorage.getItem("words")).words;
   //   console.log("words", typeof worde);
   let words = ["hello", "i", "am", "here"];
-  try {
-    if (worde) {
+  
+    if (worde && worde.length > 0) {
       words = [...worde];
-    }
-    // console.log("realWords", words);
-  } catch (err) {
-    console.log(err);
-  }
+ 
   const [visible, setVisible] = useState(true);
   useEffect(() => {
     console.log("selectedBy", window.localStorage.getItem("selectedBy"));
