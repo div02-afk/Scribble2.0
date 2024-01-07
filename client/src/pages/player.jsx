@@ -21,7 +21,7 @@ export default function Player() {
   const [myChance, setMyChance] = useState(false);
   useEffect(() => {
     socket.on("chance", (data) => {
-      window.localStorage.setItem("words", JSON.stringify(data));
+      window.localStorage.setItem("words", JSON.stringify(data.words));
       setChance(data.chance);
       window.localStorage.setItem("chance", data.chance);
     });
