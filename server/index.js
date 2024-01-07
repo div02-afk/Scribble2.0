@@ -104,7 +104,13 @@ io.on("connection", (socket) => {
   });
   socket.on("getChance", (data) => {
     // console.log("getting chance", data);
-    io.to(data.room).emit("chance", rooms[data].chance);
+    const wordsToSend = rooms[data].words.splice(0,4);
+        const wordsAndChance = {
+          words: wordsToSend,
+          chance: rooms[data].chance,
+        };
+        console.log("type: ",typeof wordsToSend);
+        io.to(data.room).emit("chance", wordsAndChance);
   });
   socket.on("nextPlayer", (data) => {
     // console.log("next player", data);

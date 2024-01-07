@@ -27,7 +27,7 @@ export default function Player() {
     });
   socket.on("selectedWord", (data) => {
     console.log("selected word:",data)
-    window.localStorage.setItem("selectedWord", data);
+    window.localStorage.setItem("selectedBy", data.selectedBy);
   });
   }, [socket]);
   useEffect(() => {

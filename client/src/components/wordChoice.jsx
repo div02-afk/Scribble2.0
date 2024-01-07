@@ -6,12 +6,12 @@ export default function WordChoice() {
   const name = window.localStorage.getItem("name");
   console.log("name", name);
   const worde = JSON.parse(window.localStorage.getItem("words")).words;
-  //   console.log("words", typeof worde);
+    console.log("words",worde);
   let words = ["hello", "i", "am", "here"];
   
     if (worde && worde.length > 0) {
       words = [...worde];
- 
+    }
   const [visible, setVisible] = useState(true);
   useEffect(() => {
     console.log("selectedBy", window.localStorage.getItem("selectedBy"));
