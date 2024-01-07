@@ -5,12 +5,17 @@ export default function WordChoice() {
   // const words = window.localStorage.getItem("words").split(",");
   const name = window.localStorage.getItem("name");
   console.log("name", name);
-  const worde = JSON.parse(window.localStorage.getItem("words")).words;
+  const worde = JSON.parse(window.localStorage.getItem("words"));
     console.log("words",worde);
   let words = ["hello", "i", "am", "here"];
   
     if (worde && worde.length > 0) {
+      try{
       words = [...worde];
+      }
+      catch(err){
+        console.log("cannot parse words");
+      }
     }
   const [visible, setVisible] = useState(true);
   useEffect(() => {
