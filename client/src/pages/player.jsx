@@ -23,11 +23,13 @@ export default function Player() {
     socket.on("chance", (data) => {
       window.localStorage.setItem("words", JSON.stringify(data.words));
       console.log("words", data.words);
+      
       setChance(data.chance);
       window.localStorage.setItem("chance", data.chance);
     });
   socket.on("selectedWord", (data) => {
     console.log("selected word:",data)
+    window.localStorage.setItem("word",data.word);
     window.localStorage.setItem("selectedBy", data.selectedBy);
   });
   }, [socket]);
@@ -60,13 +62,13 @@ export default function Player() {
         {/* {myChance && <h1>your chance</h1>} */}
         {!myChance && (
           <>
-            <h1>not your chance</h1>
+            
             <Opponent />
           </>
         )}
         {myChance && (
           <>
-            <h1>your chance</h1>
+            
             <DrawPage />
             <WordChoice />
           </>

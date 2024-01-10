@@ -13,11 +13,11 @@ export default function PlayerList({ roomKey }) {
   
   return (
     <>
-      <div className="w-32 border-2">
+      <div className="w-40 border-2 h-40 mb-20">
         <h1>PlayerList</h1>
-        {players.map((player) => (
+        {players.map((player,index) => (
           // {console.log(player)}
-          <div>{player}</div>
+          <div key = {index}>{player}</div>
         ))}
       </div>
     </>

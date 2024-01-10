@@ -7,42 +7,8 @@ export default function Host() {
   const [hostName, setHostName] = useState("");
   const [joined, setJoined] = useState(false);
   const roomKey = window.localStorage.getItem("roomKey");
-
-  const createRoom = async() =>{
-    console.log("creating room");
-    const uniqueID = new Date().getTime().toString();
-    const data = {
-          room: uniqueID,
-          hostName: hostName,
-          playerList: [],
-          started:false,
-          chance:0,
-          words:[],
-          word:"",
-        };
-    const playerData = {
-      room: uniqueID,
-      playerName: hostName,
-      justJoin: false,
-    }
-     socket.emit("createRoom",data);
-    window.localStorage.setItem("roomKey", uniqueID);
-    window.localStorage.setItem("name", hostName);
-     socket.emit("joinRoom",playerData)
-    
-    setJoined(true);
-  }
-
-  const startGame = async(roomKey) =>{
-    await socket.emit("startGame",roomKey);
-    window.location.href = "/player";
-  }
-
-  
-  const notify = () => {
-    console.log("copy notify");
-    console.log("local ",window.localStorage.getItem("roomKey"));
-    toast("Copied to Clipboard", {
+  const notify = (e) => {
+    toast(e, {
       position: "top-right",
       autoClose: 1000,
       hideProgressBar: false,
@@ -53,12 +19,56 @@ export default function Host() {
       theme: "light",
     });
   };
+
+  const createRoom = () => {
+    console.log("hostname", hostName.length);
+    if (hostName.length === 0) {
+      // alert("enter a valid name");
+      notify("Enter a valid name");
+      return;
+    } 
+      console.log("creating room");
+      const uniqueID = new Date().getTime().toString();
+      const data = {
+        room: uniqueID,
+        hostName: hostName,
+        playerList: [],
+        started: false,
+        chance: 0,
+        words: [],
+        word: "",
+      };
+      const playerData = {
+        room: uniqueID,
+        playerName: hostName,
+        justJoin: false,
+      };
+      socket.emit("createRoom", data);
+      window.localStorage.setItem("roomKey", uniqueID);
+      window.localStorage.setItem("name", hostName);
+      socket.emit("joinRoom", playerData);
+
+      setJoined(true);
+    
+  };
+
+  const startGame = async (roomKey) => {
+    await socket.emit("startGame", roomKey);
+    window.location.href = "/player";
+  };
+
   return (
     <>
-      <div className="w-screen h-screen flex flex-col justify-center items-center text-center">
+    <ToastContainer />
+      <div className="flex flex-col justify-center items-center text-center align-middle w-10/12">
         {joined && (
           <>
-            <div className="w-64 flex flex-col items-center border-2 text-left gap-4">
+            <PlayerList roomKey={roomKey} />
+          </>
+        )}
+        {joined && (
+          <>
+            <div className="w-40  flex flex-col items-center border-2 text-left gap-4">
               Share the Room Key:
             </div>
             <div
@@ -66,37 +76,45 @@ export default function Host() {
               className="text-grey-darkest text-center bg-grey-light px-2 py-2 w-64 select-none"
               onClick={() => {
                 navigator.clipboard.writeText(roomKey);
-                notify();
+                notify("Copied to Clipboard");
                 console.log("copied");
               }}
             >
-              <ToastContainer />
+              
               {roomKey}
             </div>
+            <button
+              className="w-32 border-2"
+              onClick={() => {
+                startGame(roomKey);
+              }}
+            >
+              Start Game
+            </button>
           </>
         )}
         {!joined && (
-          <div className="w-64 h-32 flex flex-col items-center border-2 text-left gap-4">
-            Host Name
+          <div 
+         
+          className="w-64 h-40 flex flex-col items-center border-2 text-left gap-4 select-none">
+            Create new Room
             <input
               type="text"
               className="border-2 border-black w-64"
               required={true}
+              placeholder="Host Name"
               value={hostName}
               onChange={(e) => {
                 setHostName(e.target.value);
               }}
             />
-            <button className="border-2 border-black w-32" onClick={createRoom}>
+            <button
+              className="border-2 border-black w-32 mt-8"
+              onClick={createRoom}
+            >
               Create Room
             </button>
           </div>
-        )}
-        {joined && (
-          <>
-            <PlayerList roomKey={roomKey} />
-            <button className="w-32 border-2" onClick={()=>{startGame(roomKey)}} >Start Game</button>
-          </>
         )}
       </div>
     </>
