@@ -43,16 +43,16 @@ const fetchWords = async () => {
 };
 
 io.on("connection", (socket) => {
-  // console.log("a user connected ", socket.id);
+  console.log("a user connected ", socket.id);
   socket.on("createRoom", async (data) => {
-    // console.log("creating Room", data);
+    console.log("creating Room", data);
     rooms[data.room] = data;
     rooms[data.room].words = await fetchWords();
     canvas[data.room] = { imageData: "", time: 0 };
     // console.log(rooms);
   });
   socket.on("joinRoom", (data) => {
-    // console.log("joining Room", data);
+    console.log("joining Room", data);
     const room = data.room;
     socket.join(room);
     // console.log(room, "joined");
