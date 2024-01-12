@@ -59,6 +59,7 @@ io.on("connection", (socket) => {
     // console.log(socket.rooms);
     if(Object.keys(rooms).includes(room) && !rooms[room].started){
       socket.emit("cannotJoin", true);
+      return;
     }
     else{
       socket.emit("cannotJoin", false);
