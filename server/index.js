@@ -60,6 +60,9 @@ io.on("connection", (socket) => {
     if(Object.keys(rooms).includes(room) && !rooms[room].started){
       socket.emit("cannotJoin", true);
     }
+    else{
+      socket.emit("cannotJoin", false);
+    }
     if (!data["justJoin"]) {
       try {
         rooms[data.room].playerList.push(data.playerName);
