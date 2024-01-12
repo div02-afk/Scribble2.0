@@ -84,6 +84,7 @@ io.on("connection", (socket) => {
     console.log("closing Room", data.room);
     delete rooms[data.room];
     delete canvas[data.room];
+    console.log(Object.keys(rooms));
   });
   socket.on("startGame", (data) => {
     // console.log("starting Game", data);
