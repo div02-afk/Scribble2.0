@@ -57,6 +57,9 @@ io.on("connection", (socket) => {
     socket.join(room);
     // console.log(room, "joined");
     // console.log(socket.rooms);
+    if(Object.keys(rooms).includes(room) && !rooms[room].started){
+      socket.emit("cannotJoin", true);
+    }
     if (!data["justJoin"]) {
       try {
         rooms[data.room].playerList.push(data.playerName);
