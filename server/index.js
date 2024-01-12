@@ -71,6 +71,11 @@ io.on("connection", (socket) => {
       }
     }
   });
+  socket.on("closeRoom", (data) => {
+    console.log("closing Room", data.room);
+    delete rooms[data.room];
+    delete canvas[data.room];
+  });
   socket.on("startGame", (data) => {
     // console.log("starting Game", data);
     rooms[data].started = true;
