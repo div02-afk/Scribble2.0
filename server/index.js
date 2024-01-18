@@ -91,12 +91,13 @@ io.on("connection", (socket) => {
     // console.log("starting Game", data);
     rooms[data].started = true;
     io.to(data).emit("gameStarted", true);
-    socket.on("chance", (data) => {
-      store.dispatch({type:"chance",payload:data.chance});
-      store.dispatch({type:"words",payload:data.words});
-      console.log("words", data.words);
-      words = data.words;
-      setChance(data.chance);
+    const wordsToSend = rooms[data].words.splice(0,4);
+    const wordsAndChance = {
+      words: wordsToSend,
+      chance: rooms[data].chance,
+    };
+    console.log("type: ",typeof wordsToSend);
+    io.to(data).emit("chance", wordsAndChance);
     //   AsyncStorage.setItem("chance", data.chance);
     });
     
