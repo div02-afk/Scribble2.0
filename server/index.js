@@ -49,6 +49,12 @@ io.on("connection", (socket) => {
     rooms[data.room] = data;
     rooms[data.room].words = await fetchWords();
     canvas[data.room] = { imageData: "", time: 0 };
+    const wordsToSend = rooms[data].words.splice(0,4);
+    const wordsAndChance = {
+      words: wordsToSend,
+      chance: rooms[data].chance,
+    };
+    io.to(data).emit("chance", wordsAndChance);
     // console.log(rooms);
   });
   socket.on("joinRoom", (data) => {
@@ -89,14 +95,8 @@ io.on("connection", (socket) => {
   socket.on("startGame", (data) => {
     // console.log("starting Game", data);
     rooms[data].started = true;
-    const wordsToSend = rooms[data].words.splice(0,4);
     io.to(data).emit("gameStarted", true);
-    const wordsAndChance = {
-      words: wordsToSend,
-      chance: rooms[data].chance,
-    };
-    console.log("type: ",typeof wordsToSend);
-    io.to(data).emit("chance", wordsAndChance);
+    
   });
   socket.on("word", (data) => {
     rooms[data.room].word = data.word;
