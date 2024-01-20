@@ -49,7 +49,7 @@ io.on("connection", (socket) => {
     rooms[data.room] = data;
     rooms[data.room].words = await fetchWords();
     canvas[data.room] = { imageData: "", time: 0 };
-    
+
     // console.log(rooms);
   });
   socket.on("joinRoom", (data) => {
@@ -58,13 +58,12 @@ io.on("connection", (socket) => {
     socket.join(room);
     // console.log(room, "joined");
     // console.log(socket.rooms);
-    if(!Object.keys(rooms).includes(room)){
-      console.log("cannot join")
+    if (!Object.keys(rooms).includes(room)) {
+      console.log("cannot join");
       io.to(room).emit("cannotJoin", true);
       socket.leave(room);
       return;
-    }
-    else{
+    } else {
       io.to(room).emit("cannotJoin", false);
     }
     if (!data["justJoin"]) {
@@ -87,20 +86,26 @@ io.on("connection", (socket) => {
     delete canvas[data.room];
     console.log(Object.keys(rooms));
   });
+  socket.on("getPlayers", (data) => {
+    console.log("getting players", data);
+    const players = {
+      playerList: rooms[data].playerList,
+      room: data,
+    };
+    socket.emit("players", players);
+  });
   socket.on("startGame", (data) => {
     // console.log("starting Game", data);
     rooms[data].started = true;
     io.to(data).emit("gameStarted", true);
-    const wordsToSend = rooms[data].words.splice(0,4);
+    const wordsToSend = rooms[data].words.splice(0, 4);
     const wordsAndChance = {
       words: wordsToSend,
       chance: rooms[data].chance,
     };
-    console.log("type: ",typeof wordsToSend);
+
     io.to(data).emit("chance", wordsAndChance);
     //   AsyncStorage.setItem("chance", data.chance);
-    });
-    
   });
   socket.on("word", (data) => {
     rooms[data.room].word = data.word;
@@ -123,28 +128,27 @@ io.on("connection", (socket) => {
   });
   socket.on("getChance", (data) => {
     // console.log("getting chance", data);
-    const wordsToSend = rooms[data].words.splice(0,4);
-        const wordsAndChance = {
-          words: wordsToSend,
-          chance: rooms[data].chance,
-        };
-        console.log("type: ",typeof wordsToSend);
-        io.to(data.room).emit("chance", wordsAndChance);
+    const wordsToSend = rooms[data].words.splice(0, 4);
+    const wordsAndChance = {
+      words: wordsToSend,
+      chance: rooms[data].chance,
+    };
+    console.log("type: ", typeof wordsToSend);
+    io.to(data.room).emit("chance", wordsAndChance);
   });
   socket.on("nextPlayer", (data) => {
     // console.log("next player", data);
     try {
       rooms[data].chance =
         (rooms[data].chance + 1) % rooms[data].playerList.length;
-        const wordsToSend = rooms[data].words.splice(0,4);
-        const wordsAndChance = {
-          words: wordsToSend,
-          chance: rooms[data].chance,
-        };
-        console.log("type: ",typeof wordsToSend);
-        io.to(data).emit("chance", wordsAndChance);
-        }
-    catch (err) {
+      const wordsToSend = rooms[data].words.splice(0, 4);
+      const wordsAndChance = {
+        words: wordsToSend,
+        chance: rooms[data].chance,
+      };
+      console.log("type: ", typeof wordsToSend);
+      io.to(data).emit("chance", wordsAndChance);
+    } catch (err) {
       console.log(err);
     }
   });
