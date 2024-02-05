@@ -20,7 +20,9 @@ function removeFromArray(array, element) {
     array.splice(index, 1);
   }
 }
-
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 const fetchWords = async () => {
   const url = "https://random-words5.p.rapidapi.com/getMultipleRandom?count=50";
   const options = {
